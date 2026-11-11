@@ -10,6 +10,13 @@ public class Alien implements Product{
     private int currentStock;
     private int maxStock;
 
+    public Alien(String name, int price, int currentStock, int maxStock) {
+        this.name = name;
+        this.price = price;
+        this.currentStock = maxStock;
+        this.maxStock = maxStock;
+    }
+
     public String getName()  {
         return name;
     }
@@ -26,5 +33,8 @@ public class Alien implements Product{
         return maxStock;
     }
 
-    public void dispense() {}
+    public void dispense() throws OutOfStockException {
+        if (currentStock < 1) throw new OutOfStockException("Product is out of stock");
+        currentStock--;
+    }
 }

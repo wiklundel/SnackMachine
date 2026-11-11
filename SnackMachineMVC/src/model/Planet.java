@@ -10,6 +10,13 @@ public class Planet implements Product {
     private int currentStock;
     private int maxStock;
 
+    public Planet(String name, int price, int currentStock, int maxStock) {
+        this.name = name;
+        this.price = price;
+        this.currentStock =currentStock;
+        this.maxStock = maxStock;
+    }
+
     public String getName()  {
         return name;
     }
@@ -26,5 +33,8 @@ public class Planet implements Product {
         return maxStock;
     }
 
-    public void dispense() {}
+    public void dispense() throws OutOfStockException {
+        if (currentStock < 1) throw new OutOfStockException("Product is out of stock");
+        currentStock--;
+    }
 }
