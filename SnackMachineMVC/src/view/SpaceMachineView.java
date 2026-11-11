@@ -32,10 +32,26 @@ public class SpaceMachineView extends JFrame {
         add(messageLabel, BorderLayout.SOUTH);
     }
 
-    public void addProductButton(String name, int price, Runnable onBuy) {
-        JButton button = new JButton(
-                "<html>" + name + "<br>" + price + " kr</html>"
+    public void addProductButton(String name, int price, String imagePath, Runnable onBuy) {
+
+        java.net.URL imageUrl = getClass().getResource(imagePath);
+
+        JButton button = new JButton();
+
+        if (imageUrl != null) {
+            ImageIcon icon = new ImageIcon(imageUrl);
+
+            Image scaledImage = icon.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
+
+            button.setIcon(new ImageIcon(scaledImage));
+        }
+
+        button.setText(
+                "<html><center>" + name + "<br>" + price + " kr</html>"
         );
+
+        button.setHorizontalTextPosition(SwingConstants.CENTER);
+        button.setVerticalTextPosition(SwingConstants.BOTTOM);
 
         button.addActionListener(e -> onBuy.run());
         productPanel.add(button);

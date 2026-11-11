@@ -12,9 +12,19 @@ public class SpaceMachineController {
         this.view = view;
 
         for (Product product : products) {
+
+            String imagePath = switch (product.getName()) {
+                case "Alien" -> "/alien.png";
+                case "Planet" -> "/planet.png";
+                case "UFO" -> "/ufo.png";
+                case "RocketShip" -> "/rocketShip.png";
+                default -> "";
+            };
+
             view.addProductButton(
                     product.getName(),
                     product.getPrice(),
+                    imagePath,
                     () -> buyProduct(product)
             );
         }
