@@ -1,7 +1,7 @@
 package model;
 
-import se.umu.cs.snackmachine.Product;
-import se.umu.cs.snackmachine.OutOfStockException;
+import se.umu.cs.spacemachine.Product;
+import se.umu.cs.spacemachine.OutOfStockException;
 
 public class RocketShip implements Product {
 

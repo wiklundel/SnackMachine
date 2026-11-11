@@ -1,4 +1,4 @@
-package se.umu.cs.snackmachine;
+package se.umu.cs.spacemachine;
 
 public interface Product {
     String getName();
