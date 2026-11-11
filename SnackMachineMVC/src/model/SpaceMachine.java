@@ -20,25 +20,25 @@ public class SpaceMachine {
         balance += amount;
     }
 
-    public boolean purchase(Product product) {
+    public PurchaseResult purchase(Product product) {
         if (product.getStock() == 0) {
             outOfStock++;
-            return false;
+            return PurchaseResult.OUT_OF_STOCK;
         }
 
         if (balance < product.getPrice()) {
             insufficientFunds++;
-            return false;
+            return PurchaseResult.INSUFFICIENT_FUND;
         }
 
         try {
             product.dispense();
             balance -= product.getPrice();
             successfulPurchases++;
-            return true;
+            return PurchaseResult.SUCCESS;
         } catch (OutOfStockException e) {
             outOfStock++;
-            return false;
+            return PurchaseResult.OUT_OF_STOCK;
         }
     }
 

@@ -1,6 +1,8 @@
 package controller;
 
 import model.SpaceMachine;
+import model.PurchaseResult;
+
 import view.SpaceMachineView;
 import se.umu.cs.spacemachine.*;
 
@@ -27,7 +29,7 @@ public class SpaceMachineController {
                 case "Alien" -> "/alien.png";
                 case "Planet" -> "/planet.png";
                 case "UFO" -> "/ufo.png";
-                case "RocketShip" -> "/rocketShip.png";
+                case "Rocket Ship" -> "/rocketShip.png";
                 default -> "";
             };
 
@@ -42,11 +44,25 @@ public class SpaceMachineController {
 
     private void buyProduct(Product product) {
 
-        boolean success = machine.purchase(product);
-        if (success) {
-            view.showMessage("Purchased " + product.getName() + "! Stock left: " + product.getStock());
-        } else {
-            view.showMessage("Purchase declined");
+        PurchaseResult result = machine.purchase(product);
+
+        switch (result) {
+            case SUCCESS ->
+                view.showMessage(
+                        "Purchased " + product.getName() +
+                        "! Stock left: " + product.getStock()
+                );
+
+            case OUT_OF_STOCK ->
+                view.showMessage(
+                        product.getName() + " is out of stock!"
+                );
+
+            case INSUFFICIENT_FUND ->
+                view.showMessage(
+                        "Insufficient funds! " +
+                        "Price: " + product.getPrice() + " kr"
+                );
         }
 
         view.updateBalance(machine.getBalance());
