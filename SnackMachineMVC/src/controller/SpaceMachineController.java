@@ -12,6 +12,8 @@ public class SpaceMachineController {
     private final SpaceMachineView view;
     private final SpaceMachine machine;
 
+    int receiptNum = 0;
+
     public SpaceMachineController(SpaceMachineView view, List<Product> products) {
         this.view = view;
         this.machine = new SpaceMachine();
@@ -48,30 +50,48 @@ public class SpaceMachineController {
 
     private void buyProduct(Product product) {
 
-        PurchaseResult result = machine.purchase(product);
+        try {
+            machine.purchase(product);
 
-        switch (result) {
-            case SUCCESS -> {
-                view.showMessage(
-                        "Purchased " + product.getName() +
-                                "! Stock left: " + product.getStock()
-                );
-                view.updateStock(product.getName(), product.getPrice(), product.getStock());
-                view.updateStockBar(product.getName(), product.getStock(), product.getMaxStock());
-            }
-            case OUT_OF_STOCK ->
-                view.showMessage(
-                        product.getName() + " is out of stock!"
-                );
+            view.showMessage(
+                    receiptNum + ". Purchased " + product.getName() +
+                    "! Stock left: " + product.getStock() + "\n"
+            );
 
-            case INSUFFICIENT_FUND ->
-                view.showMessage(
-                        "Insufficient funds! " +
-                        "Price: " + product.getPrice() + " kr"
-                );
+            view.updateStock(
+                    product.getName(),
+                    product.getPrice(),
+                    product.getStock()
+            );
+            view.updateStockBar(
+                    product.getName(),
+                    product.getStock(),
+                    product.getMaxStock()
+            );
+
+        } catch (InsufficientFundsException e) {
+            view.showMessage(
+                    receiptNum + ". " +
+                    e.getClass().getSimpleName() + ": " + e.getMessage() + "\n"
+            );
+
+        } catch (OutOfStockException e) {
+            view.showMessage(
+                    receiptNum + ". " +
+                    product.getName() + " is out of stock!\n"
+            );
         }
 
+        receiptNum++;
         view.updateBalance(machine.getBalance());
+
+                /*view.showMessage(
+                    receiptNum + ". Insufficient funds! " +
+                    "Price: " + product.getPrice() + " kr\n"
+                );
+
+                 */
+
     }
 
     private void addMoney(int amount) {
@@ -79,6 +99,6 @@ public class SpaceMachineController {
 
         view.updateBalance(machine.getBalance());
 
-        view.showMessage("Added " + amount + " kr");
+        view.showMessage("Added " + amount + " kr\n");
     }
 }
