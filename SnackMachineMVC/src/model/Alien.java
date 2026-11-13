@@ -10,7 +10,7 @@ public class Alien implements Product{
     private int currentStock;
     private int maxStock;
 
-    public Alien(String name, int price, int currentStock, int maxStock) {
+    public Alien(String name, int price, int maxStock) {
         this.name = name;
         this.price = price;
         this.currentStock = maxStock;

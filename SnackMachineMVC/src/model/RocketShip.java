@@ -10,10 +10,10 @@ public class RocketShip implements Product {
     private int currentStock;
     private int maxStock;
 
-    public RocketShip(String name, int price, int currentStock, int maxStock) {
+    public RocketShip(String name, int price, int maxStock) {
         this.name = name;
         this.price = price;
-        this.currentStock = currentStock;
+        this.currentStock = maxStock;
         this.maxStock = maxStock;
     }
 

@@ -10,10 +10,10 @@ public class UFO implements Product {
     private int currentStock;
     private int maxStock;
 
-    public UFO(String name, int price, int currentStock, int maxStock) {
+    public UFO(String name, int price, int maxStock) {
         this.name = name;
         this.price = price;
-        this.currentStock = currentStock;
+        this.currentStock = maxStock;
         this.maxStock = maxStock;
     }
 
