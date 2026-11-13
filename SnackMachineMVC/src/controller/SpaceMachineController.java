@@ -36,9 +36,13 @@ public class SpaceMachineController {
             view.addProductButton(
                     product.getName(),
                     product.getPrice(),
+                    product.getStock(),
+                    product.getMaxStock(),
                     imagePath,
                     () -> buyProduct(product)
             );
+
+            view.updateStockBar(product.getName(), product.getStock(), product.getMaxStock());
         }
     }
 
@@ -47,12 +51,14 @@ public class SpaceMachineController {
         PurchaseResult result = machine.purchase(product);
 
         switch (result) {
-            case SUCCESS ->
+            case SUCCESS -> {
                 view.showMessage(
                         "Purchased " + product.getName() +
-                        "! Stock left: " + product.getStock()
+                                "! Stock left: " + product.getStock()
                 );
-
+                view.updateStock(product.getName(), product.getPrice(), product.getStock());
+                view.updateStockBar(product.getName(), product.getStock(), product.getMaxStock());
+            }
             case OUT_OF_STOCK ->
                 view.showMessage(
                         product.getName() + " is out of stock!"

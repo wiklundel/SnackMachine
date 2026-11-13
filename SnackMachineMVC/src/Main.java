@@ -11,7 +11,7 @@ public class Main {
 
         SwingUtilities.invokeLater(() -> {
             List<Product> products = List.of(
-                    new Alien("Alien", 20, 5, 5),
+                    new Alien("Alien", 20, 3, 10),
                     new Planet("Planet", 15, 6, 6),
                     new RocketShip("Rocket Ship", 30, 4, 4),
                     new UFO("UFO", 25, 6, 6)
