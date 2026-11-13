@@ -20,26 +20,26 @@ public class SpaceMachine {
         balance += amount;
     }
 
-    public PurchaseResult purchase(Product product) {
-        if (product.getStock() == 0) {
-            outOfStock++;
-            return PurchaseResult.OUT_OF_STOCK;
-        }
+    public void purchase (Product product)
+            throws InsufficientFundsException, OutOfStockException {
 
         if (balance < product.getPrice()) {
             insufficientFunds++;
-            return PurchaseResult.INSUFFICIENT_FUND;
+            throw new InsufficientFundsException(
+                    "Not enough money to buy " + product.getName()
+            );
         }
 
         try {
             product.dispense();
             balance -= product.getPrice();
-            successfulPurchases++;
-            return PurchaseResult.SUCCESS;
         } catch (OutOfStockException e) {
             outOfStock++;
-            return PurchaseResult.OUT_OF_STOCK;
+            throw e;
         }
+
+        balance -= product.getPrice();
+        successfulPurchases++;
     }
 
     public int getSuccessfulPurchases() {
