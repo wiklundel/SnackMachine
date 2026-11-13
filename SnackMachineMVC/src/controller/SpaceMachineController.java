@@ -84,21 +84,12 @@ public class SpaceMachineController {
 
         receiptNum++;
         view.updateBalance(machine.getBalance());
-
-                /*view.showMessage(
-                    receiptNum + ". Insufficient funds! " +
-                    "Price: " + product.getPrice() + " kr\n"
-                );
-
-                 */
-
     }
 
     private void addMoney(int amount) {
         machine.addMoney(amount);
 
         view.updateBalance(machine.getBalance());
-
-        view.showMessage("Added " + amount + " kr\n");
+        //view.showMessage("Added " + amount + " kr\n");
     }
 }

@@ -32,7 +32,6 @@ public class SpaceMachine {
 
         try {
             product.dispense();
-            balance -= product.getPrice();
         } catch (OutOfStockException e) {
             outOfStock++;
             throw e;
