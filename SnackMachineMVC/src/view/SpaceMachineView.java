@@ -7,11 +7,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class SpaceMachineView extends JFrame {
-    private JPanel productPanel;
-    private JLabel messageLabel;
 
-    private JPanel moneyPanel;
     private JLabel balanceLabel;
+    private JPanel moneyPanel;
+
+    private JPanel productPanel;
+
+    private JLabel receiptLabel;
+    private JTextArea receiptLog;
 
     private final Map<String, JButton> productButtons = new HashMap<>();
     private final Map<String, StockAnimationView> stockViews = new HashMap<>();
@@ -19,7 +22,7 @@ public class SpaceMachineView extends JFrame {
 
     public SpaceMachineView() {
         setTitle("My Space Machine");
-        setSize(600, 500);
+        setSize(600, 650);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
@@ -32,6 +35,7 @@ public class SpaceMachineView extends JFrame {
         title.setFont(new Font("Arial", Font.BOLD, 24));
 
         JPanel topPanel = new JPanel(new BorderLayout());
+        topPanel.setBorder(BorderFactory.createEmptyBorder(10, 5, 10, 5));
         topPanel.add(title, BorderLayout.NORTH);
 
         balanceLabel = new JLabel(
@@ -48,20 +52,34 @@ public class SpaceMachineView extends JFrame {
         add(topPanel, BorderLayout.NORTH);
 
         productPanel = new JPanel(new GridLayout(2, 2, 10, 10));
+        productPanel.setBorder(BorderFactory.createEmptyBorder(10, 4, 10, 4));
         add(productPanel, BorderLayout.CENTER);
 
-        messageLabel = new JLabel(
-                "Select a product",
+        JPanel bottomPanel = new JPanel(new BorderLayout());
+        bottomPanel.setBorder(BorderFactory.createEmptyBorder(10, 5, 5, 5));
+        add(bottomPanel, BorderLayout.SOUTH);
+
+        receiptLabel = new JLabel(
+                "Receipt log",
                 SwingConstants.CENTER
         );
-        add(messageLabel, BorderLayout.SOUTH);
+        bottomPanel.add(receiptLabel, BorderLayout.NORTH);
+
+        receiptLog = new JTextArea();
+        receiptLog.setLineWrap(true);
+        receiptLog.setWrapStyleWord(true);
+
+        JScrollPane scrollPane = new JScrollPane(receiptLog);
+        scrollPane.createVerticalScrollBar();
+        scrollPane.setPreferredSize(new Dimension(getWidth(), 100));
+
+        bottomPanel.add(scrollPane, BorderLayout.CENTER);
     }
 
     public void addMoneyButton(int moneyValue, Runnable onClick) {
         JButton moneyButton = new JButton();
 
         moneyButton.setText("<html><center>" + moneyValue + " kr</html>");
-
         moneyButton.addActionListener(e -> onClick.run());
 
         moneyPanel.add(moneyButton);
@@ -99,7 +117,7 @@ public class SpaceMachineView extends JFrame {
     }
 
     public void showMessage(String message) {
-        messageLabel.setText((message));
+        receiptLog.append(message);
     }
 
     public void updateBalance(int balance) {
