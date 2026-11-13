@@ -59,11 +59,15 @@ public class SpaceMachineView extends JFrame {
         bottomPanel.setBorder(BorderFactory.createEmptyBorder(10, 5, 5, 5));
         add(bottomPanel, BorderLayout.SOUTH);
 
+        /** --- RECEIPT SECTION --- */
+        JPanel receiptPanel = new JPanel(new BorderLayout());
+        bottomPanel.add(receiptPanel, BorderLayout.EAST);
+
         receiptLabel = new JLabel(
                 "Receipt log",
                 SwingConstants.CENTER
         );
-        bottomPanel.add(receiptLabel, BorderLayout.NORTH);
+        receiptPanel.add(receiptLabel, BorderLayout.NORTH);
 
         receiptLog = new JTextArea();
         receiptLog.setLineWrap(true);
@@ -71,9 +75,28 @@ public class SpaceMachineView extends JFrame {
 
         JScrollPane scrollPane = new JScrollPane(receiptLog);
         scrollPane.createVerticalScrollBar();
-        scrollPane.setPreferredSize(new Dimension(getWidth(), 100));
+        scrollPane.setPreferredSize(new Dimension(getWidth() / 2, 100));
 
-        bottomPanel.add(scrollPane, BorderLayout.CENTER);
+        receiptPanel.add(scrollPane, BorderLayout.CENTER);
+
+        /** --- SUMMARY SECTION --- */
+        JPanel summaryPanel = new JPanel(new BorderLayout());
+        bottomPanel.add(summaryPanel, BorderLayout.WEST);
+        JLabel summaryLabel = new JLabel(
+                "Summary", SwingConstants.CENTER
+        );
+
+        summaryPanel.add(summaryLabel, BorderLayout.NORTH);
+
+        /** Create text are for summary */
+        JTextArea summary = new JTextArea("HEJ");
+        summary.setLineWrap(true);
+        summary.setWrapStyleWord(true);
+
+        JScrollPane summaryPane = new JScrollPane(summary);
+        summaryPane.createVerticalScrollBar();
+        summaryPane.setPreferredSize(new Dimension(getWidth() / 2, 100));
+        summaryPanel.add(summaryPane, BorderLayout.CENTER);
     }
 
     public void addMoneyButton(int moneyValue, Runnable onClick) {
