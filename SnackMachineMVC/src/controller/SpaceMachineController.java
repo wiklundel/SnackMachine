@@ -1,7 +1,6 @@
 package controller;
 
 import model.SpaceMachine;
-import model.PurchaseResult;
 
 import view.SpaceMachineView;
 import se.umu.cs.spacemachine.*;
@@ -22,6 +21,8 @@ public class SpaceMachineController {
         view.addMoneyButton(5, () -> addMoney(5));
         view.addMoneyButton(10, () -> addMoney(10));
         view.addMoneyButton(20, () -> addMoney(20));
+
+        view.addSummaryButton(() -> showSummary());
 
         view.updateBalance(machine.getBalance());
 
@@ -90,6 +91,13 @@ public class SpaceMachineController {
         machine.addMoney(amount);
 
         view.updateBalance(machine.getBalance());
-        //view.showMessage("Added " + amount + " kr\n");
+    }
+
+    private void showSummary() {
+        view.showSummary(
+                machine.getSuccessfulPurchases(),
+                machine.getInsufficientFunds(),
+                machine.getOutOfStock()
+        );
     }
 }

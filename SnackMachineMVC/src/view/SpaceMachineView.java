@@ -61,7 +61,7 @@ public class SpaceMachineView extends JFrame {
 
         /** --- RECEIPT SECTION --- */
         JPanel receiptPanel = new JPanel(new BorderLayout());
-        bottomPanel.add(receiptPanel, BorderLayout.EAST);
+        bottomPanel.add(receiptPanel, BorderLayout.WEST);
 
         receiptLabel = new JLabel(
                 "Receipt log",
@@ -79,24 +79,6 @@ public class SpaceMachineView extends JFrame {
 
         receiptPanel.add(scrollPane, BorderLayout.CENTER);
 
-        /** --- SUMMARY SECTION --- */
-        JPanel summaryPanel = new JPanel(new BorderLayout());
-        bottomPanel.add(summaryPanel, BorderLayout.WEST);
-        JLabel summaryLabel = new JLabel(
-                "Summary", SwingConstants.CENTER
-        );
-
-        summaryPanel.add(summaryLabel, BorderLayout.NORTH);
-
-        /** Create text are for summary */
-        JTextArea summary = new JTextArea("HEJ");
-        summary.setLineWrap(true);
-        summary.setWrapStyleWord(true);
-
-        JScrollPane summaryPane = new JScrollPane(summary);
-        summaryPane.createVerticalScrollBar();
-        summaryPane.setPreferredSize(new Dimension(getWidth() / 2, 100));
-        summaryPanel.add(summaryPane, BorderLayout.CENTER);
     }
 
     public void addMoneyButton(int moneyValue, Runnable onClick) {
@@ -137,6 +119,30 @@ public class SpaceMachineView extends JFrame {
         productPanel.add(productButton, BorderLayout.CENTER);
 
         updateStockBar(name, stock, maxStock);
+    }
+
+    public void addSummaryButton(Runnable onClick) {
+        JButton summaryButton = new JButton("Summary");
+
+        summaryButton.addActionListener(e -> onClick.run());
+
+        moneyPanel.add(summaryButton);
+    }
+
+    public void showSummary(int successful, int insufficient, int outOfStock) {
+        String message =
+                "successful purchase: " + successful +
+                        "\nInsufficient funds: " + insufficient +
+                        "\nOut of stock: " + outOfStock +
+                        "\nTotal purchase attempts: " +
+                        (successful + insufficient + outOfStock);
+
+        JOptionPane.showMessageDialog(
+                this,
+                message,
+                "Summary",
+                JOptionPane.INFORMATION_MESSAGE
+        );
     }
 
     public void showMessage(String message) {
